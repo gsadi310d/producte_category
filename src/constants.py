@@ -1,0 +1,3 @@
+APP_NAME = "my-new-project"
+DEFAULT_TIMEOUT = 30
+DEFAULT_PAGE_SIZE = 20
