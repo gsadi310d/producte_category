@@ -1,7 +1,7 @@
 import pytest
 
-from src.product import Product
 from src.category import Category
+from src.product import Product
 
 
 @pytest.fixture
@@ -33,27 +33,42 @@ def product_three():
         quantity=14,
     )
 
+
 @pytest.fixture
-def category_first():
-    return Category(
-        name=,
-        description=,
-        products=,
+def product_fore():
+    return Product(
+        name="Xiaomi Redmi Note 11",
+        description="1024GB, Синий",
+        price=31000.0,
+        quantity=14,
     )
 
-product4 = Product("55\" QLED 4K", "Фоновая подсветка", 123000.0, 7)
 
 @pytest.fixture
-def category_second():
+def product_five():
+    return Product(
+        name="LG",
+        description="55\" QLED 4K, Фоновая подсветка",
+        price=123000.0,
+        quantity=7,
+    )
+
+
+@pytest.fixture
+def category_first(product_five):
+    return Category(
+        name="Телевизоры",
+        description="Современный телевизор, который позволяет наслаждаться просмотром,"
+                    + " станет вашим другом и помощником",
+        products=[product_five],
+    )
+
+
+@pytest.fixture
+def category_second(product_first, product_second, product_three, product_fore):
     return Category(
         name="Смартфоны",
-        description="Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
-        products=,
+        description="Смартфоны, как средство не только коммуникации,"
+                    + " но и получения дополнительных функций для удобства жизни",
+        products=[product_first, product_second, product_three, product_fore],
     )
-    category1 = Category("Смартфоны",
-                         ",
-                         [product1, product2, product3])
-
-    category2 = Category("Телевизоры",
-                         "Современный телевизор, который позволяет наслаждаться просмотром, станет вашим другом и помощником",
-                         [product4])

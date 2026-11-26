@@ -1,28 +1,6 @@
 """Точка входа проекта."""
-import argparse
-import sys
-
-from src.constants import APP_NAME
-from src.logging import setup_logging
-from src.utils.helpers import greet
-
-logger = setup_logging()
-
-
-def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(prog=APP_NAME)
-    parser.add_argument("--verbose", action="store_true", help="подробное логирование")
-    return parser.parse_args(argv)
-
-
-def main(argv: list[str] | None = None) -> int:
-    args = parse_args(argv)
-    setup_logging(verbose=args.verbose)
-    logger.info("Старт %s", APP_NAME)
-    greet("user")
-    logger.info("Готово")
-    return 0
-
+from src.category import Category
+from src.product import Product
 
 if __name__ == "__main__":
     product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
@@ -45,7 +23,8 @@ if __name__ == "__main__":
     print(product3.quantity)
 
     category1 = Category("Смартфоны",
-                         "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
+                         "Смартфоны, как средство не только коммуникации,"
+                         + " но и получения дополнительных функций для удобства жизни",
                          [product1, product2, product3])
 
     print(category1.name == "Смартфоны")
@@ -56,7 +35,8 @@ if __name__ == "__main__":
 
     product4 = Product("55\" QLED 4K", "Фоновая подсветка", 123000.0, 7)
     category2 = Category("Телевизоры",
-                         "Современный телевизор, который позволяет наслаждаться просмотром, станет вашим другом и помощником",
+                         "Современный телевизор, который позволяет наслаждаться просмотром,"
+                         + " станет вашим другом и помощником",
                          [product4])
 
     print(category2.name)
