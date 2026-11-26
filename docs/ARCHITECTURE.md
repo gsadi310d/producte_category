@@ -4,30 +4,25 @@
 
 ```
 src/
-├── main.py          точка входа: argparse, setup_logging, код возврата
-├── constants.py     константы проекта
-├── utils/           переиспользуемые функции
-├── decorators/      логирование вызовов, retry
-├── generators/      генераторы данных (dataclass + seed)
-├── external_api/    обёртки над внешними API
-└── logging/         единая точка настройки логирования
+├── main.py         точка входа: argparse, setup_logging, код возврата
+├── product/        класс Продуктов
+├── utils/          модуль работы с JSON файлами
+└── category/       класс категории продуктов
 
-tests/               pytest: conftest + по папке на модуль
+tests/              pytest: conftest + по папке на модуль
 ```
 
 ## Таблица модулей
 
-| Модуль           | Ответственность                        | Зависимости        |
-|------------------|----------------------------------------|--------------------|
-| main             | CLI, сборка и запуск                   | utils, logging     |
-| utils            | чистые функции без побочных эффектов   | —                  |
-| decorators       | log_calls (таймер + логирование)       | logging            |
-| generators       | детерминированные данные для тестов    | utils              |
-| external_api     | ApiClient с config-датаклассом         | utils, logging     |
-| logging          | setup_logging(verbose)                 | —                  |
+| Модуль    | Ответственность                                   | Зависимости       |
+|-----------|---------------------------------------------------|-------------------|
+| main      | точка входа: читает данные, печатает категории    | utils             |
+| utils     | чтение JSON, сборка Product и Category из данных  | product, category |
+| product   | класс Product: атрибуты товара                    | —                 |
+| category  | класс Category: категория и счётчики (классовые)  | —                 |
 
 ## Принципы
 
-- Код в src/, тесты в tests/, импорт через пакет (from src.utils import ...).
-- Логи — через setup_logging, а не print.
-- Каждый модуль проверяется своим тестом: tests/test_<модуль>/.
+- Код в src/, тесты в tests/.
+- Каждый модуль проверяется своим тестом: tests/test_<модуль>.py.
+- Зависимости идут в одну сторону: main → utils → product/category. Модули product и category не знают друг о друге — их связывает только utils.
